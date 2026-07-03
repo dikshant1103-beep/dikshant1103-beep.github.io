@@ -40,7 +40,14 @@ nav .links a{color:var(--cream-dim);transition:color .25s}
 nav .links a:hover{color:var(--amber)}
 nav .links a.resume-tab{color:var(--bg);background:var(--amber);padding:.34rem .85rem;border-radius:999px;font-weight:600;transition:background .25s,transform .25s}
 nav .links a.resume-tab:hover{color:var(--bg);background:var(--gold);transform:translateY(-1px)}
-@media(max-width:720px){nav .links{display:none}}
+.nav-toggle{display:none;background:none;border:0;color:var(--cream);font-size:1.6rem;line-height:1;cursor:pointer;padding:.1rem .4rem}
+@media(max-width:720px){
+  nav{flex-wrap:wrap;padding:.9rem 5vw}
+  .nav-toggle{display:block}
+  nav .links{display:none;flex-direction:column;align-items:flex-start;gap:1.3rem;width:100%;padding:1.2rem .2rem .4rem;font-size:1rem}
+  nav.open .links{display:flex}
+  nav .links a.resume-tab{padding:.5rem 1.1rem}
+}
 
 /* hero */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 6vw;position:relative}
@@ -68,6 +75,7 @@ nav .links a.resume-tab:hover{color:var(--bg);background:var(--gold);transform:t
 
 /* sections */
 section{padding:7rem 6vw}
+@media(max-width:720px){section{padding:4.5rem 6vw}.hero{padding:0 6vw}.sec-head{margin-bottom:2.2rem}.project{margin-bottom:4rem}.stat{padding:1.6rem 1.2rem}.stat .v{font-size:2.1rem}}
 .sec-head{display:flex;align-items:baseline;gap:1.4rem;margin-bottom:3.5rem;flex-wrap:wrap}
 .sec-head .num{color:var(--terra);font-family:'Fraunces',serif;font-style:italic;font-size:1.1rem}
 .sec-head h2{font-size:clamp(2rem,5vw,3.4rem);font-weight:600}
@@ -289,6 +297,7 @@ footer .fine{color:var(--muted);font-size:.8rem}
     <a class="resume-tab" href="Dikshant_Resume_ATS.pdf" target="_blank" rel="noopener">Résumé ↓</a>
     <a href="https://github.com/dikshant1103-beep" target="_blank" rel="noopener">GitHub ↗</a>
   </div>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
 </nav>
 
 <header class="hero">
@@ -596,6 +605,15 @@ footer .fine{color:var(--muted);font-size:.8rem}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
 <script>
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+
+/* Mobile nav: hamburger toggles the links panel; tapping a link closes it. */
+(function(){
+  const nav=document.querySelector('nav'), tog=document.querySelector('.nav-toggle');
+  if(!nav||!tog) return;
+  const setOpen=o=>{nav.classList.toggle('open',o);tog.setAttribute('aria-expanded',o);tog.textContent=o?'✕':'☰';};
+  tog.addEventListener('click',()=>setOpen(!nav.classList.contains('open')));
+  nav.querySelectorAll('.links a').forEach(a=>a.addEventListener('click',()=>setOpen(false)));
+})();
 
 /* Accessibility / robustness: skip animations for reduced-motion users
    (or ?noanim) — content is fully visible without JS-driven reveals. */
