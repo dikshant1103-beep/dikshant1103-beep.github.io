@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dikshant — Mechanical & Electro-Mechanical Design Engineer</title>
+<meta name="description" content="Portfolio of Dikshant — mechanical design engineer building physics engines, digital twins and AI-assisted engineering tools.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%99%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="Dikshant — Mechanical & Electro-Mechanical Design Engineer">
+<meta property="og:description" content="I design machines, then build the physics to prove them. CAD/FEA · multibody dynamics · battery digital twins · AI-assisted engineering tools.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://dikshant1103-beep.github.io/assets/img/chassis_workbench.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1c1410; --bg2:#241a12; --panel:#2c2016; --line:#3d2d1e;
+  --cream:#f2e8d8; --cream-dim:#c9b299; --muted:#a8917a;
+  --amber:#e8833a; --gold:#d4a24c; --terra:#c25b3f; --sage:#9caf88;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--cream);font-family:'Space Grotesk',system-ui,sans-serif;overflow-x:hidden;line-height:1.6}
+::selection{background:var(--amber);color:var(--bg)}
+h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* grain overlay */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")}
+
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;
+  padding:1.1rem 4vw;background:linear-gradient(rgba(28,20,16,.92),rgba(28,20,16,.75) 70%,transparent);backdrop-filter:blur(8px)}
+nav .logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.25rem;color:var(--amber);letter-spacing:.5px}
+nav .links{display:flex;gap:2rem;font-size:.9rem}
+nav .links a{color:var(--cream-dim);transition:color .25s}
+nav .links a:hover{color:var(--amber)}
+@media(max-width:720px){nav .links{display:none}}
+
+/* hero */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 6vw;position:relative}
+.hero .kicker{color:var(--gold);letter-spacing:.35em;text-transform:uppercase;font-size:.8rem;margin-bottom:1.4rem}
+.hero h1{font-size:clamp(3.2rem,10vw,8.5rem);line-height:.95;font-weight:700}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line span{display:inline-block}
+.hero h1 em{font-style:italic;color:var(--amber)}
+.hero p.sub{max-width:640px;margin-top:2rem;color:var(--cream-dim);font-size:1.1rem}
+.hero .cta{display:flex;gap:1rem;margin-top:2.6rem;flex-wrap:wrap}
+.btn{padding:.85rem 1.7rem;border-radius:999px;font-weight:600;font-size:.95rem;border:1px solid var(--line);
+  transition:transform .25s,background .25s,color .25s,border-color .25s;display:inline-flex;align-items:center;gap:.5rem}
+.btn.primary{background:var(--amber);color:#241305;border-color:var(--amber)}
+.btn.primary:hover{background:var(--gold);border-color:var(--gold);transform:translateY(-3px)}
+.btn.ghost:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-3px)}
+.hero .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:var(--muted);font-size:.8rem;letter-spacing:.2em;text-transform:uppercase}
+.hero .glow{position:absolute;right:-12vw;top:18vh;width:44vw;height:44vw;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(232,131,58,.16),rgba(194,91,63,.07) 45%,transparent 70%)}
+
+/* marquee */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:1rem 0;background:var(--bg2)}
+.marquee .track{display:flex;gap:3rem;white-space:nowrap;width:max-content}
+.marquee span{color:var(--muted);font-size:.95rem;letter-spacing:.12em;text-transform:uppercase}
+.marquee b{color:var(--gold);font-weight:500}
+
+/* sections */
+section{padding:7rem 6vw}
+.sec-head{display:flex;align-items:baseline;gap:1.4rem;margin-bottom:3.5rem;flex-wrap:wrap}
+.sec-head .num{color:var(--terra);font-family:'Fraunces',serif;font-style:italic;font-size:1.1rem}
+.sec-head h2{font-size:clamp(2rem,5vw,3.4rem);font-weight:600}
+.sec-head .rule{flex:1;height:1px;background:var(--line);min-width:80px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.stat{background:var(--bg2);padding:2.2rem 1.6rem}
+.stat .v{font-family:'Fraunces',serif;font-size:2.6rem;color:var(--amber);font-weight:600}
+.stat .l{color:var(--muted);font-size:.9rem;margin-top:.3rem}
+
+/* project cards */
+.project{display:grid;grid-template-columns:1.15fr .85fr;gap:3.5rem;align-items:center;margin-bottom:7rem}
+.project:nth-child(even){grid-template-columns:.85fr 1.15fr}
+.project:nth-child(even) .p-media{order:2}
+@media(max-width:900px){.project,.project:nth-child(even){grid-template-columns:1fr}.project:nth-child(even) .p-media{order:0}}
+.p-media{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--bg2);box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.p-media .imgwrap{overflow:hidden}
+.p-media img{width:100%;transform:scale(1.04);transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.p-media:hover img{transform:scale(1.1)}
+.p-media .second{border-top:1px solid var(--line)}
+.p-tag{color:var(--terra);font-size:.8rem;letter-spacing:.25em;text-transform:uppercase;margin-bottom:.9rem}
+.p-body h3{font-size:clamp(1.7rem,3.4vw,2.5rem);font-weight:600;margin-bottom:1.1rem}
+.p-body p{color:var(--cream-dim);margin-bottom:1.2rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.6rem}
+.chips span{border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:.28rem .8rem;font-size:.78rem}
+.p-links{display:flex;gap:1.4rem;flex-wrap:wrap}
+.p-links a{color:var(--amber);font-weight:600;font-size:.95rem;border-bottom:1px solid transparent;transition:border-color .2s}
+.p-links a:hover{border-color:var(--amber)}
+.p-links a .arr{display:inline-block;transition:transform .25s}
+.p-links a:hover .arr{transform:translate(3px,-3px)}
+
+/* terminal mock for career copilot */
+.term{background:#171009;border-radius:18px;border:1px solid var(--line);padding:1.4rem;font-family:ui-monospace,Menlo,monospace;font-size:.82rem;line-height:1.75;color:var(--cream-dim);box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.term .bar{display:flex;gap:.45rem;margin-bottom:1rem}
+.term .bar i{width:11px;height:11px;border-radius:50%;background:var(--line)}
+.term .bar i:first-child{background:var(--terra)}.term .bar i:nth-child(2){background:var(--gold)}.term .bar i:nth-child(3){background:var(--sage)}
+.term .g{color:var(--sage)} .term .a{color:var(--amber)} .term .d{color:var(--muted)}
+
+/* mini cards */
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.mini{background:linear-gradient(150deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:18px;padding:2rem;transition:transform .3s,border-color .3s}
+.mini:hover{transform:translateY(-6px);border-color:var(--gold)}
+.mini .yr{color:var(--terra);font-size:.8rem;letter-spacing:.2em}
+.mini h3{font-size:1.35rem;margin:.7rem 0 .8rem}
+.mini p{color:var(--cream-dim);font-size:.95rem;margin-bottom:1.2rem}
+.mini a{color:var(--amber);font-weight:600;font-size:.9rem}
+.mini a:hover{text-decoration:underline}
+
+/* experience */
+.xp{border-left:2px solid var(--line);margin-left:.4rem;padding-left:2.2rem;display:flex;flex-direction:column;gap:2.8rem;position:relative}
+.xp-item{position:relative}
+.xp-item::before{content:"";position:absolute;left:-2.75rem;top:.45rem;width:13px;height:13px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 5px rgba(232,131,58,.15)}
+.xp-item .when{color:var(--gold);font-size:.85rem;letter-spacing:.12em}
+.xp-item h3{font-size:1.4rem;margin:.3rem 0}
+.xp-item .org{color:var(--muted);margin-bottom:.7rem}
+.xp-item p{color:var(--cream-dim);max-width:760px}
+
+/* ── live suspension sim ──────────────────────────────────── */
+#simCanvas{position:absolute;left:0;right:0;bottom:0;width:100%;height:300px;z-index:1;cursor:crosshair}
+.sim-hint{position:absolute;right:6vw;bottom:1.6rem;z-index:2;color:var(--muted);font-size:.72rem;
+  letter-spacing:.18em;text-transform:uppercase;pointer-events:none;opacity:.75}
+@media(max-width:820px){#simCanvas{height:190px}.sim-hint{display:none}}
+
+/* ── morphing wisps (screen-blended plasma) ───────────────── */
+.wisp{position:absolute;mix-blend-mode:screen;pointer-events:none;z-index:0;opacity:.85;filter:saturate(1.05)}
+footer{position:relative;overflow:hidden}
+footer>*{position:relative;z-index:1}
+.wisp-footer{width:min(62vw,860px);left:50%;top:46%;transform:translate(-50%,-50%)}
+#stats{position:relative;overflow:visible;z-index:auto}
+.wisp-stats{width:520px;right:-120px;top:-60px;opacity:.5}
+.wisp-hero{width:min(44vw,640px);right:-6vw;top:-4vh;opacity:.55;z-index:1}
+@media(max-width:820px){.wisp-stats,.wisp-hero{display:none}}
+
+/* section video backdrops (trionn crops) */
+#more{position:relative;overflow:hidden;background:var(--bg)}
+.smoke-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  mix-blend-mode:screen;opacity:.45;z-index:0;pointer-events:none}
+#more>*:not(.smoke-bg){position:relative;z-index:1}
+#experience{position:relative;overflow:hidden;background:var(--bg)}
+.obelisk-bg{position:absolute;right:-30px;bottom:-60px;height:115%;
+  mix-blend-mode:screen;opacity:.85;z-index:0;pointer-events:none}
+#experience>*:not(.obelisk-bg){position:relative;z-index:1}
+@media(max-width:900px){.obelisk-bg{opacity:.35}}
+
+/* ── custom cursor ────────────────────────────────────────── */
+#cDot,#cRing{position:fixed;top:0;left:0;pointer-events:none;z-index:2000;border-radius:50%;
+  transform:translate(-50%,-50%);will-change:transform}
+#cDot{width:8px;height:8px;background:var(--amber)}
+#cRing{width:38px;height:38px;border:1.5px solid rgba(232,131,58,.65);transition:width .25s,height .25s,border-color .25s}
+#cRing.hot{width:64px;height:64px;border-color:var(--gold)}
+@media(hover:none){#cDot,#cRing{display:none}}
+html.fancy-cursor,html.fancy-cursor a,html.fancy-cursor .btn{cursor:none}
+#simCanvas{cursor:crosshair !important}
+
+/* char-split headline */
+.hero h1 .ch{display:inline-block;will-change:transform}
+
+/* ── cinematic video layers ───────────────────────────────── */
+.hero-vid,.hero-vid-shade{position:absolute;inset:0;z-index:0}
+.hero-vid{width:100%;height:100%;object-fit:cover;opacity:.55}
+.hero-vid-shade{background:
+  linear-gradient(100deg,var(--bg) 26%,rgba(28,20,16,.72) 55%,rgba(28,20,16,.3) 80%),
+  linear-gradient(rgba(28,20,16,.65),transparent 30%,transparent 70%,var(--bg))}
+.p-media video{width:100%;display:block}
+.mini.has-vid{position:relative;overflow:hidden}
+.mini.has-vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.9}
+.mini.has-vid .shade{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(rgba(23,16,9,.5),rgba(23,16,9,.88) 75%)}
+.mini.has-vid>*:not(video):not(.shade){position:relative;z-index:2}
+.xp-media{border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.6);align-self:start;position:sticky;top:110px}
+.xp-media video{width:100%;display:block}
+.xp-media .cap{padding:.7rem 1.1rem;font-size:.8rem;color:var(--muted);letter-spacing:.08em;background:var(--bg2)}
+.xp-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:3.5rem;align-items:start}
+@media(max-width:1000px){.xp-grid{grid-template-columns:1fr}.xp-media{position:static}}
+
+/* ── ambient background layer ─────────────────────────────── */
+.bg-layer{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-layer .grid{position:absolute;inset:-20%;opacity:.05;
+  background-image:linear-gradient(var(--gold) 1px,transparent 1px),linear-gradient(90deg,var(--gold) 1px,transparent 1px);
+  background-size:64px 64px}
+.bg-layer svg{position:absolute}
+.bg-gear{opacity:.07}
+.bg-gear.g1{top:12vh;left:-90px;width:340px}
+.bg-gear.g2{top:34vh;left:190px;width:150px}
+.bg-gear.g3{bottom:8vh;right:-70px;width:280px}
+nav,header,section,footer,.marquee{position:relative;z-index:1}
+
+/* patrol drone that crosses the page */
+#patrolDrone{position:fixed;top:0;left:0;width:92px;z-index:2;pointer-events:none;opacity:.85;
+  filter:drop-shadow(0 12px 18px rgba(0,0,0,.45))}
+
+/* hero EV powertrain scene */
+.hero-scene{position:absolute;right:3vw;top:54%;transform:translateY(-50%);width:min(40vw,620px);z-index:0;opacity:.95}
+@media(max-width:1500px){.hero-scene{opacity:.45;width:36vw}}
+@media(max-width:1100px){.hero-scene{display:none}}
+.hero{position:relative}
+.hero>*:not(.hero-scene):not(.glow):not(.hero-vid):not(.hero-vid-shade):not(.sim-hint):not(#simCanvas):not(.wisp){position:relative;z-index:2}
+
+/* project icon animations (next to tag) */
+.p-tagrow{display:flex;align-items:center;gap:.8rem;margin-bottom:.9rem}
+.p-tagrow .p-tag{margin-bottom:0}
+.p-icon{width:46px;height:46px;flex:none}
+
+/* scan overlay on warrantylens image */
+.scanwrap{position:relative}
+.scanline{position:absolute;left:0;right:0;top:0;height:3px;z-index:3;
+  background:linear-gradient(90deg,transparent,var(--amber),transparent);
+  box-shadow:0 0 18px 3px rgba(232,131,58,.55);opacity:0}
+.scanbox{position:absolute;border:2px solid var(--amber);border-radius:6px;z-index:3;opacity:0;
+  box-shadow:0 0 14px rgba(232,131,58,.35)}
+.scanbox i{position:absolute;top:-1.35rem;left:-2px;background:var(--amber);color:#241305;
+  font-style:normal;font-size:.62rem;font-weight:700;padding:.1rem .45rem;border-radius:4px;letter-spacing:.05em}
+
+/* card hover tilt */
+.p-media{will-change:transform}
+
+/* section gears */
+.sec-head .gearset{width:54px;height:54px;flex:none;align-self:center}
+
+/* footer / contact */
+footer{padding:7rem 6vw 3rem;background:var(--bg2);border-top:1px solid var(--line);text-align:center}
+footer h2{font-size:clamp(2.4rem,7vw,5rem);font-weight:600;margin-bottom:1.2rem}
+footer h2 em{font-style:italic;color:var(--amber)}
+footer p{color:var(--cream-dim);max-width:520px;margin:0 auto 2.4rem}
+footer .cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem}
+footer .fine{color:var(--muted);font-size:.8rem}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="sym-gear" viewBox="0 0 100 100">
+      <g fill="currentColor">
+        <rect x="45" y="0"  width="10" height="16" rx="3"/>
+        <rect x="45" y="84" width="10" height="16" rx="3"/>
+        <rect x="0"  y="45" width="16" height="10" rx="3"/>
+        <rect x="84" y="45" width="16" height="10" rx="3"/>
+        <rect x="45" y="0"  width="10" height="16" rx="3" transform="rotate(45 50 50)"/>
+        <rect x="45" y="84" width="10" height="16" rx="3" transform="rotate(45 50 50)"/>
+        <rect x="0"  y="45" width="16" height="10" rx="3" transform="rotate(45 50 50)"/>
+        <rect x="84" y="45" width="16" height="10" rx="3" transform="rotate(45 50 50)"/>
+      </g>
+      <circle cx="50" cy="50" r="33" fill="none" stroke="currentColor" stroke-width="13"/>
+      <circle cx="50" cy="50" r="9" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="bg-layer" aria-hidden="true">
+  <div class="grid"></div>
+  <svg class="bg-gear g1" viewBox="0 0 100 100" style="color:var(--gold)"><use href="#sym-gear"/></svg>
+  <svg class="bg-gear g2" viewBox="0 0 100 100" style="color:var(--terra)"><use href="#sym-gear"/></svg>
+  <svg class="bg-gear g3" viewBox="0 0 100 100" style="color:var(--amber)"><use href="#sym-gear"/></svg>
+</div>
+
+<svg id="patrolDrone" viewBox="0 0 120 60" aria-hidden="true">
+  <g stroke="#d4a24c" stroke-width="3" fill="none">
+    <line x1="30" y1="30" x2="90" y2="30"/>
+    <line x1="38" y1="30" x2="24" y2="16"/><line x1="82" y1="30" x2="96" y2="16"/>
+  </g>
+  <rect x="48" y="24" width="24" height="14" rx="5" fill="#e8833a"/>
+  <circle cx="60" cy="42" r="4" fill="#c25b3f"/>
+  <g fill="#f2e8d8" opacity=".9">
+    <ellipse class="prop" cx="24" cy="14" rx="16" ry="2.6"/>
+    <ellipse class="prop" cx="96" cy="14" rx="16" ry="2.6"/>
+  </g>
+</svg>
+
+<div id="cDot"></div><div id="cRing"></div>
+
+<nav>
+  <div class="logo">D<span style="color:var(--gold)">.</span></div>
+  <div class="links">
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+    <a href="https://github.com/dikshant1103-beep" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <video class="hero-vid" autoplay muted loop playsinline src="assets/vid/hero_rocket.mp4"></video>
+  <div class="hero-vid-shade"></div>
+  <div class="glow"></div>
+  <video class="wisp wisp-hero" autoplay muted loop playsinline src="assets/vid/wisp.mp4"></video>
+  <canvas id="simCanvas" aria-hidden="true"></canvas>
+  <div class="sim-hint">live spring–damper sim — click the road to drop a bump</div>
+  <div class="kicker">Mechanical &amp; Electro-Mechanical Design Engineer</div>
+  <h1>
+    <span class="line"><span>I design machines,</span></span>
+    <span class="line"><span>then build the <em>physics</em></span></span>
+    <span class="line"><span>to prove them.</span></span>
+  </h1>
+  <p class="sub">I'm <b>Dikshant</b> — M.Tech (CAD/CAM), MNNIT Allahabad, currently in EV body &amp; chassis R&amp;D at OLA Electric.
+    From GD&amp;T drawings and FEA to multibody solvers, battery digital twins and AI-assisted inspection platforms —
+    I like owning the whole loop: concept → analysis → working software → validation.</p>
+  <div class="cta">
+    <a class="btn primary" href="#projects">See the work ↓</a>
+    <a class="btn ghost" href="https://github.com/dikshant1103-beep" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn ghost" href="https://www.linkedin.com/in/dikshant-470b7618b/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn ghost" href="mailto:dikshant1103@gmail.com">Email</a>
+  </div>
+  <div class="scroll-hint">scroll</div>
+</header>
+
+<div class="marquee"><div class="track">
+  <span>Siemens NX</span><span>·</span><span>SolidWorks</span><span>·</span><span>CATIA</span><span>·</span>
+  <span>ANSYS</span><span>·</span><span>COMSOL</span><span>·</span><span><b>GD&amp;T certified</b></span><span>·</span>
+  <span>PyChrono MBD</span><span>·</span><span>FEA · Thermal · Vibration</span><span>·</span><span>Python</span><span>·</span>
+  <span>MATLAB</span><span>·</span><span>PyTorch</span><span>·</span><span>FastAPI</span><span>·</span><span>ROS 2 / Gazebo</span><span>·</span>
+  <span>Siemens NX</span><span>·</span><span>SolidWorks</span><span>·</span><span>CATIA</span><span>·</span>
+  <span>ANSYS</span><span>·</span><span>COMSOL</span><span>·</span><span><b>GD&amp;T certified</b></span><span>·</span>
+  <span>PyChrono MBD</span><span>·</span><span>FEA · Thermal · Vibration</span><span>·</span><span>Python</span><span>·</span>
+  <span>MATLAB</span><span>·</span><span>PyTorch</span><span>·</span><span>FastAPI</span><span>·</span><span>ROS 2 / Gazebo</span><span>·</span>
+</div></div>
+
+<section id="stats">
+  <video class="wisp wisp-stats" autoplay muted loop playsinline src="assets/vid/wisp.mp4"></video>
+  <div class="stats">
+    <div class="stat"><div class="v" data-count="9">0</div><div class="l">open-source repositories</div></div>
+    <div class="stat"><div class="v" data-count="32">0</div><div class="l">tabs in one chassis-design workbench</div></div>
+    <div class="stat"><div class="v" data-count="60">0</div><div class="l">% RMSE cut vs MIT battery benchmark</div></div>
+    <div class="stat"><div class="v" data-count="25">0</div><div class="l">% component cost saved via hybrid PSO</div></div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="sec-head"><svg class="gearset" viewBox="0 0 100 100" aria-hidden="true">
+    <g class="gA" style="color:var(--terra)"><use href="#sym-gear" x="0" y="0" width="62" height="62"/></g>
+    <g class="gB" style="color:var(--gold)"><use href="#sym-gear" x="52" y="42" width="46" height="46"/></g>
+  </svg><span class="num">01</span><h2>Selected Projects</h2><div class="rule"></div></div>
+
+  <div class="project">
+    <div class="p-media">
+      <div class="imgwrap"><img src="assets/img/chassis_workbench.jpg" alt="Chassis Workbench overview dashboard" loading="lazy"></div>
+    </div>
+    <div class="p-body">
+      <div class="p-tagrow"><svg class="p-icon" viewBox="0 0 100 100" aria-hidden="true">
+   <g class="icon-gearA" style="color:var(--amber)"><use href="#sym-gear" width="58" height="58" x="2" y="2"/></g>
+   <g class="icon-gearB" style="color:var(--gold)"><use href="#sym-gear" width="44" height="44" x="52" y="48"/></g></svg><div class="p-tag">Vehicle dynamics · Desktop app</div></div>
+      <h3>Chassis Workbench</h3>
+      <p>A 32-tab motorcycle chassis design workbench — geometry, suspension kinematics, anti-squat/anti-dive,
+         stability and structural targets, with every number traceable to Foale &amp; Cossalter textbook equations.
+         Twin physics engines (TypeScript for instant feedback, Python/FastAPI for sweeps, sensitivity, Monte-Carlo
+         and optimization) plus a generalized-alpha multibody solver.</p>
+      <div class="chips"><span>React + Electron</span><span>FastAPI</span><span>MBD · generalized-α</span><span>Three.js</span><span>Monte-Carlo</span></div>
+      <div class="p-links"><a href="https://github.com/dikshant1103-beep/chassis-workbench" target="_blank" rel="noopener">GitHub <span class="arr">↗</span></a></div>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="p-media">
+      <div class="imgwrap"><img src="assets/img/motosim_gazebo.jpg" alt="moto_sim live dashboard with Gazebo digital twin" loading="lazy"></div>
+      <div class="imgwrap second"><img src="assets/img/motosim_slam.jpg" alt="moto_sim ROS2 robotics tab with SLAM map" loading="lazy"></div>
+    </div>
+    <div class="p-body">
+      <div class="p-tagrow"><svg class="p-icon" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+   <circle class="icon-wheel" cx="50" cy="50" r="34" stroke="var(--amber)" stroke-width="7"/>
+   <g class="icon-spokes" stroke="var(--gold)" stroke-width="5" stroke-linecap="round">
+     <line x1="50" y1="22" x2="50" y2="78"/><line x1="22" y1="50" x2="78" y2="50"/>
+     <line x1="30" y1="30" x2="70" y2="70"/><line x1="70" y1="30" x2="30" y2="70"/></g>
+   <circle cx="50" cy="50" r="8" fill="var(--terra)"/></svg><div class="p-tag">Multibody simulation · Digital twin</div></div>
+      <h3>moto_sim</h3>
+      <p>A laptop-class motorcycle simulation platform: PyChrono multibody physics with PINN tire models, a live
+         Electron dashboard, and a ROS 2 / Gazebo digital-twin stack with SLAM, LiDAR and onboard-camera YOLO.
+         Validated against the published Whipple bicycle benchmark to 0.02% eigenvalue error — a screening tool for
+         teams who can't afford Adams/SIMPACK.</p>
+      <div class="chips"><span>PyChrono</span><span>PINN tires</span><span>ROS 2 · Gazebo</span><span>SLAM</span><span>WebSocket telemetry</span></div>
+      <div class="p-links"><a href="https://github.com/dikshant1103-beep/moto-sim" target="_blank" rel="noopener">GitHub <span class="arr">↗</span></a></div>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="p-media">
+      <div class="imgwrap"><img src="assets/img/batteryos_twin.jpg" alt="BatteryOS physics-based digital twin screen" loading="lazy"></div>
+      <div class="imgwrap second"><video autoplay muted loop playsinline preload="metadata" src="assets/vid/battery.mp4"></video></div>
+    </div>
+    <div class="p-body">
+      <div class="p-tagrow"><svg class="p-icon" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+   <rect x="12" y="30" width="64" height="40" rx="8" stroke="var(--gold)" stroke-width="5"/>
+   <rect x="80" y="42" width="10" height="16" rx="3" fill="var(--gold)"/>
+   <rect class="icon-battfill" x="19" y="37" width="50" height="26" rx="4" fill="var(--amber)"/>
+   <path class="icon-bolt" d="M48 22 40 50 h10 l-8 28 22 -34 h-11 l7 -22 z" fill="var(--cream)" opacity="0"/></svg><div class="p-tag">Battery intelligence · ML + physics</div></div>
+      <h3>MambaRUL Studio / BatteryOS</h3>
+      <p>A battery RUL/SoH platform built around a Mamba state-space model (−60% RMSE vs the MIT benchmark) with
+         conformal uncertainty on every prediction, a PyBaMM physics digital twin, a DeepONet thermal-field operator
+         that reads internal core temperature from standard BMS signals (RMSE 1.24 °C), pack-level GNN corrections,
+         and second-life grading — shipped as two Electron desktop apps on one FastAPI backend.</p>
+      <div class="chips"><span>Mamba SSM</span><span>DeepONet</span><span>PyBaMM</span><span>Conformal CI</span><span>ONNX edge</span><span>Helm/K8s</span></div>
+      <div class="p-links">
+        <a href="https://github.com/dikshant1103-beep/mambarul-studio" target="_blank" rel="noopener">GitHub <span class="arr">↗</span></a>
+        <a href="https://github.com/dikshant1103-beep/batteryos-thermal-twin" target="_blank" rel="noopener">Thermal-twin hackathon repo <span class="arr">↗</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="p-media">
+      <div class="imgwrap scanwrap"><img src="assets/img/warrantylens_dashboard.jpg" alt="WarrantyLens dashboard" loading="lazy">
+     <div class="scanline"></div>
+     <div class="scanbox" style="left:14%;top:38%;width:24%;height:22%"><i>scratch 0.91</i></div>
+     <div class="scanbox" style="left:58%;top:52%;width:20%;height:26%"><i>dent 0.84</i></div></div>
+      <div class="imgwrap second"><video autoplay muted loop playsinline preload="metadata" src="assets/vid/warranty.mp4"></video></div>
+    </div>
+    <div class="p-body">
+      <div class="p-tagrow"><svg class="p-icon" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+   <rect x="14" y="14" width="72" height="72" rx="10" stroke="var(--gold)" stroke-width="5"/>
+   <line class="icon-scan" x1="20" y1="30" x2="80" y2="30" stroke="var(--amber)" stroke-width="4" stroke-linecap="round"/>
+   <rect class="icon-bbox" x="30" y="42" width="34" height="26" rx="4" stroke="var(--amber)" stroke-width="4" opacity="0"/></svg><div class="p-tag">AI inspection · EV after-sales</div></div>
+      <h3>WarrantyLens</h3>
+      <p>An advisory, human-in-the-loop EV warranty inspection assistant: mechanics upload photos/video, a pipeline of
+         fine-tuned YOLOv11 (mAP50 0.68), a vision-language model, OCR VIN verification, serial-number lifecycle
+         tracking and simulated telemetry produces an evidence-linked risk score and a unified defect-vs-misuse
+         verdict — the reviewer always makes the final call. 43 API paths, 28/28 tests green in CI.</p>
+      <div class="chips"><span>FastAPI · Celery</span><span>Next.js</span><span>YOLOv11</span><span>Qwen2.5-VL</span><span>Digital passport</span></div>
+      <div class="p-links"><a href="https://github.com/dikshant1103-beep/warrantylens" target="_blank" rel="noopener">GitHub <span class="arr">↗</span></a></div>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="p-media">
+      <div class="imgwrap"><video autoplay muted loop playsinline preload="metadata" src="assets/vid/drone_3d.mp4"></video></div>
+      <div class="imgwrap second"><img src="assets/img/drone_annotated.jpg" alt="Drone inspection camera frame with YOLO defect annotations" loading="lazy"></div>
+    </div>
+    <div class="p-body">
+      <div class="p-tagrow"><svg class="p-icon icon-drone" viewBox="0 0 120 60" aria-hidden="true">
+   <g stroke="var(--gold)" stroke-width="4" fill="none">
+     <line x1="30" y1="34" x2="90" y2="34"/><line x1="38" y1="34" x2="24" y2="18"/><line x1="82" y1="34" x2="96" y2="18"/></g>
+   <rect x="48" y="27" width="24" height="15" rx="5" fill="var(--amber)"/>
+   <g fill="var(--cream)"><ellipse class="prop" cx="24" cy="16" rx="15" ry="3"/><ellipse class="prop" cx="96" cy="16" rx="15" ry="3"/></g></svg><div class="p-tag">Autonomous robotics · Simulation</div></div>
+      <h3>EV Drone Inspector</h3>
+      <p>An autonomous warehouse-inspection drone, simulated end-to-end: PX4 SITL + Gazebo warehouse, a persistent
+         20 Hz offboard flight controller with smooth carrot trajectories and divergence guards, live YOLO defect
+         detection, a browser control center with a drag-and-drop warehouse editor and click-to-fly — and a PDF
+         inspection report on landing.</p>
+      <div class="chips"><span>PX4 · MAVSDK</span><span>Gazebo</span><span>ROS 2</span><span>YOLO</span><span>asyncio control loop</span></div>
+      <div class="p-links"><a href="https://github.com/dikshant1103-beep/drone-inspector" target="_blank" rel="noopener">GitHub <span class="arr">↗</span></a></div>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="p-media">
+      <div class="term">
+        <div class="bar"><i></i><i></i><i></i></div>
+        <div><span class="g">$</span> career-copilot <span class="a">search</span> "battery ML engineer" --location bengaluru</div>
+        <div class="d">→ 47 roles from Adzuna · Remotive · Greenhouse · Lever</div>
+        <div><span class="g">$</span> career-copilot <span class="a">rank</span> --against my-profile</div>
+        <div class="d">→ #1 · 92% fit — BMS Engineer, EV startup (missing: CAN bus)</div>
+        <div><span class="g">$</span> career-copilot <span class="a">tailor</span> --job 1 --pdf</div>
+        <div class="d">→ resume_tailored.pdf + cover letter written ✓</div>
+        <div><span class="g">$</span> <span style="opacity:.6">you click submit — the AI never does.</span></div>
+      </div>
+    </div>
+    <div class="p-body">
+      <div class="p-tagrow"><svg class="p-icon" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+   <rect x="12" y="20" width="76" height="60" rx="9" stroke="var(--gold)" stroke-width="5"/>
+   <path class="icon-prompt" d="M26 40 l14 10 -14 10" stroke="var(--amber)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+   <line class="icon-cursorline" x1="48" y1="62" x2="66" y2="62" stroke="var(--cream)" stroke-width="6" stroke-linecap="round"/></svg><div class="p-tag">Applied LLMs · RAG</div></div>
+      <h3>Career Copilot</h3>
+      <p>A local-first job-search co-pilot: your resume, thesis and papers go into a ChromaDB vector store; Claude +
+         RAG analyzes job descriptions, ranks fit, tailors ATS-ready resume PDFs and writes cover letters. An Electron
+         desktop app over a FastAPI backend, with a deliberate co-pilot stance — it prepares everything, you submit.</p>
+      <div class="chips"><span>Claude API</span><span>RAG · ChromaDB</span><span>Electron + React</span><span>FastAPI</span><span>Rich CLI</span></div>
+      <div class="p-links">
+        <a href="https://github.com/dikshant1103-beep/career-copilot" target="_blank" rel="noopener">Desktop app <span class="arr">↗</span></a>
+        <a href="https://github.com/dikshant1103-beep/career-ai-assistant" target="_blank" rel="noopener">RAG engine <span class="arr">↗</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="project">
+    <div class="p-media">
+      <div class="imgwrap"><video autoplay muted loop playsinline preload="metadata" src="assets/vid/bracket.mp4"></video></div>
+      <div class="imgwrap second"><img src="assets/img/retrofit_mount.jpg" alt="Generatively designed EV motor mount, rendered from STL" loading="lazy"></div>
+    </div>
+    <div class="p-body">
+      <div class="p-tagrow"><svg class="p-icon" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+   <g stroke="var(--gold)" stroke-width="4">
+     <path d="M20 80 L50 20 L80 80 Z"/><line x1="35" y1="50" x2="65" y2="50"/><line x1="50" y1="20" x2="50" y2="80"/></g>
+   <g fill="var(--amber)"><circle class="node" cx="20" cy="80" r="6"/><circle class="node" cx="50" cy="20" r="6"/>
+     <circle class="node" cx="80" cy="80" r="6"/><circle class="node" cx="50" cy="50" r="5"/></g></svg><div class="p-tag">Generative design · CAE automation</div></div>
+      <h3>RetroFitAI</h3>
+      <p>An ICE-to-EV retrofit design engine: parametric mounts, brackets and battery trays generated as STEP/STL,
+         re-ranked by FEA, with a GNN surrogate trained on the SimJEB jet-engine-bracket dataset. The generative motor
+         mount shown here cut mass by 65% versus the baseline bracket while passing its load cases.</p>
+      <div class="chips"><span>Generative CAD</span><span>FEA re-ranking</span><span>GNN surrogate</span><span>SimJEB</span><span>STEP/STL</span></div>
+      <div class="p-links"><span style="color:var(--muted);font-size:.9rem">Desktop AppImage — repo coming back soon</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="more" style="padding-top:0">
+  <video class="smoke-bg" autoplay muted loop playsinline src="assets/vid/smoke.mp4"></video>
+  <div class="sec-head"><svg class="gearset" viewBox="0 0 100 100" aria-hidden="true">
+    <g class="gA" style="color:var(--terra)"><use href="#sym-gear" x="0" y="0" width="62" height="62"/></g>
+    <g class="gB" style="color:var(--gold)"><use href="#sym-gear" x="52" y="42" width="46" height="46"/></g>
+  </svg><span class="num">02</span><h2>Core Mechanical Work</h2><div class="rule"></div></div>
+  <div class="mini-grid">
+    <div class="mini has-vid">
+      <video autoplay muted loop playsinline preload="metadata" src="assets/vid/fea.mp4"></video><div class="shade"></div>
+      <div class="yr">2025</div>
+      <h3>Hybrid PSO Structural Optimization</h3>
+      <p>Cut a mechanical component's cost by 25% by reproducing and extending a published optimization method —
+         Design of Experiments + ANSYS + SolidWorks structural modeling, orchestrated in MATLAB.</p>
+      <a href="https://docs.google.com/document/d/1ajPodcrh6QQwhsf2t47iVmoQTErjaZCkZWt093LkbBM/edit?tab=t.0" target="_blank" rel="noopener">Read the report ↗</a>
+    </div>
+    <div class="mini has-vid">
+      <video autoplay muted loop playsinline preload="metadata" src="assets/vid/hands.mp4"></video><div class="shade"></div>
+      <div class="yr">Reverse engineering</div>
+      <h3>Digital Twin of a Human Hand</h3>
+      <p>High-accuracy digital twin of a human hand via 3D scanning, mesh repair and surface reconstruction —
+         MeshLab point-cloud processing into a clean SolidWorks model.</p>
+      <a href="https://docs.google.com/document/d/1gq3Xx8PRg8fwLtXgo9njahkgYGiuxhSg/edit" target="_blank" rel="noopener">Read the report ↗</a>
+    </div>
+    <div class="mini has-vid">
+      <video autoplay muted loop playsinline preload="metadata" src="assets/vid/stair.mp4"></video><div class="shade"></div>
+      <div class="yr">Design → fabrication</div>
+      <h3>Stair-Climbing Mechanism</h3>
+      <p>Designed and fabricated a higher-payload stair-climbing load mechanism — led the project from concept
+         and mechanism synthesis through fabrication as project coordinator.</p>
+      <span style="color:var(--muted);font-size:.9rem">Built hardware · MNNIT</span>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <video class="obelisk-bg" autoplay muted loop playsinline src="assets/vid/obelisk.mp4"></video>
+  <div class="sec-head"><svg class="gearset" viewBox="0 0 100 100" aria-hidden="true">
+    <g class="gA" style="color:var(--terra)"><use href="#sym-gear" x="0" y="0" width="62" height="62"/></g>
+    <g class="gB" style="color:var(--gold)"><use href="#sym-gear" x="52" y="42" width="46" height="46"/></g>
+  </svg><span class="num">03</span><h2>Experience &amp; Education</h2><div class="rule"></div></div>
+  <div class="xp-grid">
+  <div class="xp">
+    <div class="xp-item">
+      <div class="when">Jan 2026 – May 2026</div>
+      <h3>Vehicle Engineering Intern</h3>
+      <div class="org">OLA Electric — Bengaluru</div>
+      <p>EV body &amp; chassis R&amp;D: 3D CAD design and engineering revisions against safety and packaging requirements;
+         fed FEA structural results and prototyping feedback back into designs; documented design intent for reviews,
+         procurement and assembly.</p>
+    </div>
+    <div class="xp-item">
+      <div class="when">2024 – 2026</div>
+      <h3>M.Tech, CAD/CAM</h3>
+      <div class="org">MNNIT Allahabad (NIT), Prayagraj — SGPA 8/10</div>
+      <p>Training &amp; Placement Representative. Thesis work grew into the battery RUL research above — a cross-chemistry
+         Mamba model drafted for journal submission.</p>
+    </div>
+    <div class="xp-item">
+      <div class="when">Jan 2023 – Jun 2023</div>
+      <h3>Mechanical Engineering Trainee</h3>
+      <div class="org">V.L. Impex Pvt. Ltd. — Faridabad</div>
+      <p>Shop-floor mechanical practice, quality-control and routine-inspection checks; built structured task and
+         reporting protocols.</p>
+    </div>
+    <div class="xp-item">
+      <div class="when">2019 – 2023</div>
+      <h3>B.Tech, Mechanical Engineering</h3>
+      <div class="org">B.S. Anangpuria Institute of Technology, Faridabad — CGPA 8.21/10</div>
+      <p>Winner, NASA Astronomy Olympiad (2015). Certifications: GD&amp;T, SolidWorks, AutoCAD, Siemens NX, COMSOL, MATLAB.</p>
+    </div>
+  </div>
+  <div class="xp-media"><video autoplay muted loop playsinline preload="metadata" src="assets/vid/ola_chassis.mp4"></video><div class="cap">EV BODY &amp; CHASSIS R&amp;D — skateboard platform</div></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <video class="wisp wisp-footer" autoplay muted loop playsinline src="assets/vid/wisp.mp4"></video>
+  <h2>Let's build something <em>that moves.</em></h2>
+  <p>Open to mechanical &amp; electro-mechanical design roles — Bangalore or pan-India.
+     If the intersection of CAD, physics and software is your team's problem space, I'd love to talk.</p>
+  <div class="cta">
+    <a class="btn primary" href="mailto:dikshant1103@gmail.com">dikshant1103@gmail.com</a>
+    <a class="btn ghost" href="https://www.linkedin.com/in/dikshant-470b7618b/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn ghost" href="https://github.com/dikshant1103-beep" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <div class="fine">© 2026 Dikshant · Faridabad, Haryana · handcrafted with GSAP &amp; warm coffee tones</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+
+/* Accessibility / robustness: skip animations for reduced-motion users
+   (or ?noanim) — content is fully visible without JS-driven reveals. */
+const noAnim = matchMedia("(prefers-reduced-motion: reduce)").matches
+  || new URLSearchParams(location.search).has("noanim");
+if (noAnim) {
+  document.documentElement.style.scrollBehavior = "auto";
+  document.getElementById("patrolDrone").style.display = "none";
+  const sc=document.getElementById("simCanvas"); if(sc) sc.style.display="none";
+  const sh=document.querySelector(".sim-hint"); if(sh) sh.style.display="none";
+  gsap.to(".marquee .track",{xPercent:-50,ease:"none",duration:28,repeat:-1});
+  document.querySelectorAll(".stat .v").forEach(el=>el.innerText=el.dataset.count);
+  document.querySelectorAll(".scanbox").forEach(b=>b.style.opacity=1);
+  throw new Error("animations disabled");
+}
+
+/* ══ machinery layer ══════════════════════════════════════════ */
+
+/* propellers — everywhere */
+gsap.to(".prop",{scaleX:.15,transformOrigin:"50% 50%",duration:.09,repeat:-1,yoyo:true,ease:"none"});
+
+/* patrol drone crossing the page on a lazy sine path */
+(function patrol(){
+  const d=document.getElementById("patrolDrone"), W=innerWidth, H=innerHeight;
+  const ltr=Math.random()>.5, y0=H*(0.12+Math.random()*0.5);
+  gsap.set(d,{x:ltr?-140:W+140,y:y0,scaleX:ltr?1:-1});
+  gsap.to(d,{duration:16+Math.random()*8,ease:"none",
+    motionPath:{path:[{x:ltr?W*0.3:W*0.7,y:y0-70},{x:ltr?W*0.65:W*0.35,y:y0+50},{x:ltr?W+160:-160,y:y0-40}],curviness:1.4},
+    onComplete:patrol});
+  gsap.to(d,{rotation:ltr?4:-4,duration:2.2,repeat:-1,yoyo:true,ease:"sine.inOut"});
+})();
+
+/* background gears — slow spin + scroll-coupled */
+gsap.to(".bg-gear.g1",{rotation:360,transformOrigin:"50% 50%",duration:70,repeat:-1,ease:"none"});
+gsap.to(".bg-gear.g2",{rotation:-360,transformOrigin:"50% 50%",duration:45,repeat:-1,ease:"none"});
+gsap.to(".bg-gear.g3",{rotation:360,transformOrigin:"50% 50%",duration:90,repeat:-1,ease:"none"});
+gsap.to(".bg-layer .grid",{yPercent:-8,ease:"none",scrollTrigger:{scrub:1}});
+
+/* section-header gear clusters mesh with scroll */
+gsap.utils.toArray(".sec-head .gearset").forEach(gs=>{
+  gsap.to(gs.querySelector(".gA"),{rotation:220,transformOrigin:"31% 31%",ease:"none",
+    scrollTrigger:{trigger:gs.closest("section"),start:"top bottom",end:"bottom top",scrub:1.2}});
+  gsap.to(gs.querySelector(".gB"),{rotation:-300,transformOrigin:"75% 65%",ease:"none",
+    scrollTrigger:{trigger:gs.closest("section"),start:"top bottom",end:"bottom top",scrub:1.2}});
+});
+
+/* project icon loops */
+gsap.to(".icon-gearA",{rotation:360,transformOrigin:"31% 31%",duration:7,repeat:-1,ease:"none"});
+gsap.to(".icon-gearB",{rotation:-360,transformOrigin:"74% 70%",duration:5.4,repeat:-1,ease:"none"});
+gsap.to(".icon-spokes, .icon-wheel",{rotation:360,transformOrigin:"50% 50%",duration:3,repeat:-1,ease:"none"});
+gsap.timeline({repeat:-1})
+  .fromTo(".icon-battfill",{scaleX:.12},{scaleX:1,transformOrigin:"left center",duration:2.2,ease:"power1.inOut"})
+  .to(".icon-bolt",{opacity:1,duration:.18,yoyo:true,repeat:3},"-=0.4")
+  .to(".icon-battfill",{opacity:.55,duration:.5,yoyo:true,repeat:1},"+=0.4");
+gsap.timeline({repeat:-1,repeatDelay:.7})
+  .fromTo(".icon-scan",{attr:{y1:24,y2:24}},{attr:{y1:78,y2:78},duration:1.4,ease:"none"})
+  .to(".icon-bbox",{opacity:1,duration:.2},"-=0.5")
+  .to(".icon-bbox",{opacity:0,duration:.3},"+=0.8");
+gsap.to(".icon-drone",{y:-6,duration:1.1,repeat:-1,yoyo:true,ease:"sine.inOut"});
+gsap.to(".node",{scale:1.6,transformOrigin:"50% 50%",duration:.8,stagger:.25,repeat:-1,yoyo:true,ease:"sine.inOut"});
+gsap.to(".icon-cursorline",{opacity:0,duration:.5,repeat:-1,yoyo:true,ease:"steps(1)"});
+
+/* morphing wisps: slow spin + scroll drift */
+gsap.to(".wisp-footer",{rotation:35,scale:1.18,ease:"none",
+  scrollTrigger:{trigger:"footer",start:"top bottom",end:"bottom top",scrub:1.5}});
+gsap.to(".wisp-stats",{y:120,rotation:-25,ease:"none",
+  scrollTrigger:{trigger:"#stats",start:"top bottom",end:"bottom top",scrub:1.5}});
+gsap.to(".wisp-hero",{y:60,rotation:12,ease:"none",
+  scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:1.2}});
+
+gsap.to(".smoke-bg",{yPercent:10,ease:"none",
+  scrollTrigger:{trigger:"#more",start:"top bottom",end:"bottom top",scrub:1.5}});
+gsap.to(".obelisk-bg",{y:-90,ease:"none",
+  scrollTrigger:{trigger:"#experience",start:"top bottom",end:"bottom top",scrub:1.5}});
+
+/* WarrantyLens scan sweep over the screenshot */
+(function(){
+  const wrap=document.querySelector(".scanwrap"); if(!wrap) return;
+  const line=wrap.querySelector(".scanline"), boxes=wrap.querySelectorAll(".scanbox");
+  const tl=gsap.timeline({paused:true,repeat:-1,repeatDelay:2.4});
+  tl.set(line,{top:0,opacity:1}).set(boxes,{opacity:0,scale:.85})
+    .to(line,{top:"100%",duration:1.8,ease:"none"})
+    .to(line,{opacity:0,duration:.3},"-=0.2")
+    .to(boxes,{opacity:1,scale:1,duration:.35,stagger:.25,ease:"back.out(2)"},"-=1.0")
+    .to(boxes,{opacity:0,duration:.4},"+=1.6");
+  ScrollTrigger.create({trigger:wrap,start:"top 80%",onEnter:()=>tl.play(),onLeave:()=>tl.pause(),onEnterBack:()=>tl.play()});
+})();
+
+/* hero entrance */
+document.querySelectorAll(".hero h1 .line > span").forEach(line=>{
+  const split=node=>{
+    [...node.childNodes].forEach(n=>{
+      if(n.nodeType===3){
+        const frag=document.createDocumentFragment();
+        [...n.textContent].forEach(c=>{
+          const sp=document.createElement("span");
+          sp.className="ch"; sp.innerHTML=c===" "?"&nbsp;":c; frag.appendChild(sp);
+        });
+        n.replaceWith(frag);
+      } else split(n);
+    });
+  };
+  split(line);
+});
+gsap.timeline()
+  .from(".hero .kicker",{y:24,opacity:0,duration:.7,ease:"power3.out"})
+  .from(".hero h1 .ch",{yPercent:130,rotate:9,duration:.9,stagger:.018,ease:"back.out(1.6)"},"-=.3")
+  .from(".hero .sub",{y:26,opacity:0,duration:.8,ease:"power3.out"},"-=.5")
+  .from(".hero .cta .btn",{y:20,opacity:0,duration:.6,stagger:.08,ease:"power3.out"},"-=.5")
+  .from(".hero .scroll-hint",{opacity:0,duration:.8},"-=.2");
+
+gsap.to(".hero .glow",{yPercent:25,ease:"none",
+  scrollTrigger:{trigger:".hero",start:"top top",end:"bottom top",scrub:true}});
+
+/* marquee drift — speed reacts to scroll */
+const marqueeTween = gsap.to(".marquee .track",{xPercent:-50,ease:"none",duration:28,repeat:-1});
+
+/* stat counters */
+document.querySelectorAll(".stat .v").forEach(el=>{
+  const target=+el.dataset.count;
+  ScrollTrigger.create({trigger:el,start:"top 85%",once:true,
+    onEnter:()=>gsap.fromTo(el,{innerText:0},{innerText:target,duration:1.6,snap:{innerText:1},ease:"power2.out"})});
+});
+
+/* sections + cards */
+gsap.utils.toArray(".sec-head").forEach(h=>{
+  gsap.from(h,{y:40,opacity:0,duration:.9,ease:"power3.out",
+    scrollTrigger:{trigger:h,start:"top 85%"}});
+});
+gsap.utils.toArray(".project").forEach(card=>{
+  const media=card.querySelector(".p-media,.term")||card;
+  const body=card.querySelector(".p-body");
+  gsap.from(media,{y:70,opacity:0,duration:1,ease:"power3.out",
+    scrollTrigger:{trigger:card,start:"top 78%"}});
+  gsap.from(body.children,{y:36,opacity:0,duration:.8,stagger:.09,ease:"power3.out",
+    scrollTrigger:{trigger:card,start:"top 72%"}});
+  const img=card.querySelector(".p-media img");
+  if(img) gsap.fromTo(img,{yPercent:-6},{yPercent:6,ease:"none",
+    scrollTrigger:{trigger:card,start:"top bottom",end:"bottom top",scrub:true}});
+});
+gsap.utils.toArray(".mini").forEach((m,i)=>{
+  gsap.from(m,{y:50,opacity:0,duration:.8,delay:i*.06,ease:"power3.out",
+    scrollTrigger:{trigger:m,start:"top 88%"}});
+});
+gsap.utils.toArray(".xp-item").forEach(x=>{
+  gsap.from(x,{x:-40,opacity:0,duration:.8,ease:"power3.out",
+    scrollTrigger:{trigger:x,start:"top 85%"}});
+});
+gsap.from("footer h2,footer p,footer .cta",{y:40,opacity:0,duration:.9,stagger:.12,ease:"power3.out",
+  scrollTrigger:{trigger:"footer",start:"top 75%"}});
+
+
+/* ══ crafted layer: cursor · magnetism · tilt · skew · live sim ══ */
+
+/* custom cursor */
+if (matchMedia("(hover:hover)").matches) {
+  document.documentElement.classList.add("fancy-cursor");
+  const dot=document.getElementById("cDot"), ring=document.getElementById("cRing");
+  let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+  addEventListener("mousemove",e=>{mx=e.clientX;my=e.clientY;
+    gsap.set(dot,{x:mx,y:my});});
+  gsap.ticker.add(()=>{rx+=(mx-rx)*.16;ry+=(my-ry)*.16;gsap.set(ring,{x:rx,y:ry});});
+  document.querySelectorAll("a,.btn,.p-links a").forEach(el=>{
+    el.addEventListener("mouseenter",()=>ring.classList.add("hot"));
+    el.addEventListener("mouseleave",()=>ring.classList.remove("hot"));
+  });
+}
+
+/* magnetic buttons */
+document.querySelectorAll(".btn").forEach(btn=>{
+  btn.addEventListener("mousemove",e=>{
+    const r=btn.getBoundingClientRect();
+    gsap.to(btn,{x:(e.clientX-r.left-r.width/2)*.32,y:(e.clientY-r.top-r.height/2)*.42,duration:.4,ease:"power3.out"});
+  });
+  btn.addEventListener("mouseleave",()=>gsap.to(btn,{x:0,y:0,duration:.6,ease:"elastic.out(1,.45)"}));
+});
+
+/* 3d tilt on project media */
+document.querySelectorAll(".p-media,.term").forEach(card=>{
+  card.addEventListener("mousemove",e=>{
+    const r=card.getBoundingClientRect();
+    const px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5;
+    gsap.to(card,{rotateY:px*9,rotateX:-py*8,scale:1.015,duration:.5,ease:"power2.out"});
+  });
+  card.addEventListener("mouseleave",()=>gsap.to(card,{rotateY:0,rotateX:0,scale:1,duration:.9,ease:"elastic.out(1,.5)"}));
+});
+
+/* scroll-velocity: marquee spins faster when you scroll */
+ScrollTrigger.create({onUpdate:self=>{
+  marqueeTween.timeScale(gsap.utils.clamp(-4,4,1+Math.abs(self.getVelocity())/900));
+  gsap.to(marqueeTween,{timeScale:1,duration:1.2,overwrite:"auto"});
+}});
+
+/* ── live spring–damper motorcycle sim ───────────────────── */
+(function(){
+  const cv=document.getElementById("simCanvas"); if(!cv) return;
+  const ctx=cv.getContext("2d");
+  let W,H,DPR;
+  const fit=()=>{DPR=Math.min(devicePixelRatio||1,2);
+    W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);};
+  fit(); addEventListener("resize",fit);
+
+  const SPEED=170;              // px/s world speed
+  const bumps=[];               // {x0 world, amp, w}
+  let t=0, last=performance.now();
+
+  const roadY=x=>{               // world-x → road height (screen y from bottom)
+    let y=60+10*Math.sin(x*.004)+6*Math.sin(x*.011+2);
+    for(const b of bumps){const d=(x-b.x0)/b.w; y+=b.amp*Math.exp(-d*d);}
+    return y;
+  };
+  cv.addEventListener("click",e=>{
+    const r=cv.getBoundingClientRect();
+    const wx=t*SPEED+(e.clientX-r.left);
+    bumps.push({x0:wx,amp:26+Math.random()*16,w:26});
+    if(bumps.length>14)bumps.shift();
+  });
+  setInterval(()=>{ // ambient bumps so it is alive untouched
+    bumps.push({x0:t*SPEED+W+120,amp:(Math.random()<.5?1:-0.6)*(14+Math.random()*18),w:22+Math.random()*30});
+    if(bumps.length>14)bumps.shift();
+  },2600);
+
+  // body: heave y (px above rear-wheel line), pitch th
+  const K=170,C=13,M=1.1,LF=78,LR=78,I=M*LF*LR;
+  let by=136,vy=0,th=0,vth=0;
+  const xR=W*.60, gap=156;      // screen anchor (recomputed each frame vs W)
+
+  function step(dt){
+    const xr=W*.62, xf=xr+gap;
+    const wxR=t*SPEED+xr, wxF=t*SPEED+xf;
+    const yR=roadY(wxR)+24, yF=roadY(wxF)+24;        // wheel centers above bottom
+    const attR=by+ -th*LR, attF=by+ th*LF;            // spring top heights (small angle)
+    const dR=attR-yR-52, dF=attF-yF-52;               // spring deflection from natural 52
+    const fR=-K*dR-C*(vy-vth*LR), fF=-K*dF-C*(vy+vth*LF);
+    const ay=(fR+fF)/M-230*0 ;                        // gravity folded into natural length
+    const ath=(fF*LF-fR*LR)/I;
+    vy+=(ay-140*(by-118)*0.0)*dt; // soft centering not needed
+    vth+=ath*dt;
+    vy*=0.999; vth*=0.995;
+    by+=vy*dt; th+=vth*dt;
+    th=Math.max(-.22,Math.min(.22,th));
+  }
+
+  function zigzag(x1,y1,x2,y2,n,a){
+    ctx.beginPath();ctx.moveTo(x1,y1);
+    const dx=(x2-x1)/n, dy=(y2-y1)/n, nx=-(y2-y1), ny=(x2-x1), L=Math.hypot(nx,ny)||1;
+    for(let i=1;i<n;i++){const s=(i%2?1:-1)*a;
+      ctx.lineTo(x1+dx*i+nx/L*s, y1+dy*i+ny/L*s);}
+    ctx.lineTo(x2,y2);ctx.stroke();
+  }
+
+  function draw(){
+    const now=performance.now(), dt=Math.min((now-last)/1000,.05); last=now; t+=dt;
+    for(let i=0;i<3;i++) step(dt/3);
+    ctx.clearRect(0,0,W,H);
+    const base=H-8;
+    // road
+    ctx.strokeStyle="rgba(212,162,76,.9)";ctx.lineWidth=2.5;ctx.beginPath();
+    for(let x=0;x<=W;x+=6){const y=base-roadY(t*SPEED+x);x?ctx.lineTo(x,y):ctx.moveTo(x,y);}
+    ctx.stroke();
+    ctx.strokeStyle="rgba(212,162,76,.18)";ctx.lineWidth=8;ctx.stroke();
+
+    const xr=W*.62, xf=xr+gap;
+    const yR=base-(roadY(t*SPEED+xr)+24), yF=base-(roadY(t*SPEED+xf)+24);
+    const cy=base-(by), rot=t*SPEED/24;
+    const yBr=cy+th*LR, yBf=cy-th*LF;
+
+    // wheels
+    for(const [wx,wy] of [[xr,yR],[xf,yF]]){
+      ctx.strokeStyle="#f2e8d8";ctx.lineWidth=3.5;
+      ctx.beginPath();ctx.arc(wx,wy,24,0,7);ctx.stroke();
+      ctx.strokeStyle="rgba(242,232,216,.55)";ctx.lineWidth=2;
+      for(let k=0;k<3;k++){const a=rot+k*Math.PI/3;
+        ctx.beginPath();ctx.moveTo(wx-Math.cos(a)*22,wy-Math.sin(a)*22);
+        ctx.lineTo(wx+Math.cos(a)*22,wy+Math.sin(a)*22);ctx.stroke();}
+    }
+    // springs
+    ctx.strokeStyle="#e8833a";ctx.lineWidth=2.6;
+    zigzag(xr,yR-4,xr,yBr,7,7); zigzag(xf,yF-4,xf,yBf,7,7);
+    // body beam
+    ctx.save();
+    ctx.translate((xr+xf)/2,(yBr+yBf)/2); ctx.rotate(Math.atan2(yBf-yBr,xf-xr));
+    const bl=gap+66;
+    const g=ctx.createLinearGradient(-bl/2,0,bl/2,0);
+    g.addColorStop(0,"#2c2016");g.addColorStop(1,"#3d2d1e");
+    ctx.fillStyle=g;ctx.strokeStyle="#d4a24c";ctx.lineWidth=2;
+    ctx.beginPath();ctx.roundRect(-bl/2,-30,bl,26,13);ctx.fill();ctx.stroke();
+    // seat + tank hints
+    ctx.fillStyle="#e8833a";
+    ctx.beginPath();ctx.roundRect(-bl/2+14,-42,44,14,7);ctx.fill();
+    ctx.beginPath();ctx.roundRect(6,-44,52,17,8);ctx.fill();
+    // headlight beam
+    const hl=ctx.createLinearGradient(bl/2,0,bl/2+130,0);
+    hl.addColorStop(0,"rgba(232,131,58,.4)");hl.addColorStop(1,"rgba(232,131,58,0)");
+    ctx.fillStyle=hl;ctx.beginPath();
+    ctx.moveTo(bl/2-4,-24);ctx.lineTo(bl/2+150,-56);ctx.lineTo(bl/2+150,8);ctx.closePath();ctx.fill();
+    ctx.restore();
+    // equation watermark
+    ctx.fillStyle="rgba(168,145,122,.5)";ctx.font="12px ui-monospace,monospace";
+    ctx.fillText("m·ÿ + c·ẏ + k·y = F(road) — integrated live",16,H-10);
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
