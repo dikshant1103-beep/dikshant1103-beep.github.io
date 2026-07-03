@@ -38,6 +38,8 @@ nav .logo{font-family:'Fraunces',serif;font-weight:700;font-size:1.25rem;color:v
 nav .links{display:flex;gap:2rem;font-size:.9rem}
 nav .links a{color:var(--cream-dim);transition:color .25s}
 nav .links a:hover{color:var(--amber)}
+nav .links a.resume-tab{color:var(--bg);background:var(--amber);padding:.34rem .85rem;border-radius:999px;font-weight:600;transition:background .25s,transform .25s}
+nav .links a.resume-tab:hover{color:var(--bg);background:var(--gold);transform:translateY(-1px)}
 @media(max-width:720px){nav .links{display:none}}
 
 /* hero */
@@ -284,7 +286,7 @@ footer .fine{color:var(--muted);font-size:.8rem}
     <a href="#projects">Projects</a>
     <a href="#experience">Experience</a>
     <a href="#contact">Contact</a>
-    <a href="Dikshant_Resume_ATS.pdf" target="_blank" rel="noopener">Résumé ↓</a>
+    <a class="resume-tab" href="Dikshant_Resume_ATS.pdf" target="_blank" rel="noopener">Résumé ↓</a>
     <a href="https://github.com/dikshant1103-beep" target="_blank" rel="noopener">GitHub ↗</a>
   </div>
 </nav>
@@ -586,7 +588,7 @@ footer .fine{color:var(--muted);font-size:.8rem}
     <a class="btn ghost" href="https://www.linkedin.com/in/dikshant-470b7618b/" target="_blank" rel="noopener">LinkedIn</a>
     <a class="btn ghost" href="https://github.com/dikshant1103-beep" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <div class="fine">© 2026 Dikshant · Faridabad, Haryana · handcrafted with GSAP &amp; warm coffee tones</div>
+  <div class="fine">© 2026 Dikshant · Faridabad, Haryana</div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
