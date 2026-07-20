@@ -257,6 +257,10 @@ footer h2 em{font-style:italic;color:var(--amber)}
 footer p{color:var(--cream-dim);max-width:520px;margin:0 auto 2.4rem}
 footer .cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem}
 footer .fine{color:var(--muted);font-size:.8rem}
+.cad-src{margin-top:2.4rem;padding:1.6rem 1.8rem;border:1px solid var(--line);border-radius:16px;background:var(--bg2)}
+.cad-src-head{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem}
+.cad-src p{color:var(--muted);font-size:.95rem;margin-bottom:1.1rem;max-width:62ch}
+.cad-src code{font-size:.9em;color:var(--gold)}
 </style>
 </head>
 <body>
@@ -643,6 +647,17 @@ footer .fine{color:var(--muted);font-size:.8rem}
     </div>
   </div>
   <div class="mv-hint">drag to orbit · scroll to zoom — real CAD, converted to glTF, running in your browser</div>
+
+  <div class="cad-src">
+    <div class="cad-src-head">Native source files</div>
+    <p>SolidWorks assemblies, offered as-is for anyone who wants to open the real geometry.
+       These are native <code>.SLDASM</code> files and need SolidWorks 2022 or later — they
+       will not open in a browser or a viewer.</p>
+    <div class="p-links">
+      <a href="assets/cad/3-wheeler-suspension-assembly.SLDASM" download>Three-wheeler suspension assembly <span class="arr">↓</span></a>
+      <a href="assets/cad/ambulance-rear-suspension-assembly.SLDASM" download>Ambulance rear suspension assembly <span class="arr">↓</span></a>
+    </div>
+  </div>
 </section>
 
 <section id="experience">
