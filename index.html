@@ -261,6 +261,9 @@ footer .fine{color:var(--muted);font-size:.8rem}
 .cad-src-head{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.7rem}
 .cad-src p{color:var(--muted);font-size:.95rem;margin-bottom:1.1rem;max-width:62ch}
 .cad-src code{font-size:.9em;color:var(--gold)}
+#bikeCanvas{position:absolute;right:0;top:6vh;width:min(58vw,900px);height:min(46vh,420px);
+  z-index:0;pointer-events:none;opacity:.5}
+@media(max-width:900px){#bikeCanvas{display:none}}
 </style>
 </head>
 <body>
@@ -323,7 +326,7 @@ footer .fine{color:var(--muted);font-size:.8rem}
   <video class="hero-vid" autoplay muted loop playsinline src="assets/vid/hero_rocket.mp4"></video>
   <div class="hero-vid-shade"></div>
   <div class="glow"></div>
-  <video class="wisp wisp-hero" autoplay muted loop playsinline src="assets/vid/wisp.mp4"></video>
+  <canvas id="bikeCanvas" aria-hidden="true"></canvas>
   <canvas id="simCanvas" aria-hidden="true"></canvas>
   <div class="sim-hint">live spring–damper sim — click the road to drop a bump</div>
   <div class="kicker">Dikshant &nbsp;·&nbsp; Mechanical &amp; Electro-Mechanical Design Engineer</div>
@@ -427,7 +430,7 @@ footer .fine{color:var(--muted);font-size:.8rem}
          Twin physics engines (TypeScript for instant feedback, Python/FastAPI for sweeps, sensitivity, Monte-Carlo
          and optimization) plus a generalized-alpha multibody solver.</p>
       <div class="chips"><span>React + Electron</span><span>FastAPI</span><span>MBD · generalized-α</span><span>Three.js</span><span>Monte-Carlo</span></div>
-      <div class="p-links"><a href="https://github.com/dikshant1103-beep/chassis-workbench" target="_blank" rel="noopener">GitHub <span class="arr">↗</span></a></div>
+      <div class="p-links"><a href="https://chassis-workbench.vercel.app" target="_blank" rel="noopener">Live app <span class="arr">↗</span></a><a href="https://github.com/dikshant1103-beep/chassis-workbench" target="_blank" rel="noopener">GitHub <span class="arr">↗</span></a></div>
     </div>
   </div>
 
@@ -738,6 +741,7 @@ if (noAnim) {
   document.documentElement.style.scrollBehavior = "auto";
   document.getElementById("patrolDrone").style.display = "none";
   const sc=document.getElementById("simCanvas"); if(sc) sc.style.display="none";
+  const bc=document.getElementById("bikeCanvas"); if(bc) bc.style.display="none";
   const sh=document.querySelector(".sim-hint"); if(sh) sh.style.display="none";
   gsap.to(".marquee .track",{xPercent:-50,ease:"none",duration:28,repeat:-1});
   document.querySelectorAll(".stat .v").forEach(el=>el.innerText=el.dataset.count);
@@ -1036,6 +1040,173 @@ ScrollTrigger.create({onUpdate:self=>{
     requestAnimationFrame(draw);
   }
   requestAnimationFrame(draw);
+})();
+</script>
+<script>
+/* ══ hero backdrop: live suspension kinematics ═══════════════
+   A side-view chassis schematic that actually solves its own linkage —
+   the swingarm rotates about its pivot, the shock length follows from the
+   geometry, and the motion ratio is differentiated numerically each frame.
+   Nothing here is a canned loop; change a hardpoint and the numbers move.
+   Same model as the Chassis Workbench app, drawn small.                    */
+(function bikeBackdrop(){
+  const cv = document.getElementById("bikeCanvas");
+  if(!cv) return;
+  const ctx = cv.getContext("2d");
+
+  const C = { line:"#3d2d1e", muted:"#a8917a", dim:"#c9b299",
+              amber:"#e8833a", gold:"#d4a24c", sage:"#9caf88" };
+
+  /* hardpoints, millimetres, y up from the ground plane */
+  const R = 310, WB = 1390, TRAVEL = 138;
+  const P  = {x:860, y:340};          // swingarm pivot
+  const SU = {x:905, y:640};          // shock upper mount (frame)
+  const LNK = 165;                    // linkage take-off along the swingarm
+  const FC = {x:250, y:905};          // fork crown
+  const AF = {x:0,   y:R};            // front axle
+  const A0 = {x:WB,  y:R};            // rear axle, static
+  const L  = Math.hypot(A0.x-P.x, A0.y-P.y);
+  const PH0 = Math.atan2(A0.y-P.y, A0.x-P.x);
+
+  /* solve the linkage for a given wheel travel */
+  function solve(t){
+    const ph = Math.asin(Math.max(-1,Math.min(1,(R+t-P.y)/L)));
+    const A  = {x:P.x+L*Math.cos(ph), y:P.y+L*Math.sin(ph)};
+    const Lp = {x:P.x+LNK*Math.cos(ph), y:P.y+LNK*Math.sin(ph)};
+    return {ph, A, Lp, shock:Math.hypot(SU.x-Lp.x, SU.y-Lp.y)};
+  }
+  const S0 = solve(0);
+  /* Motion ratio = |d(shock)/d(wheel)|, differentiated rather than assumed.
+     The shock shortens as the wheel rises, so the raw derivative is negative;
+     the ratio is conventionally quoted as a magnitude. */
+  const ratioAt = t => Math.abs(solve(t+2).shock - solve(t-2).shock) / 4;
+
+  let W=0, H=0, k=1, ox=0, oy=0;
+  function resize(){
+    const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio||1, 2);
+    W = r.width; H = r.height;
+    cv.width = W*d; cv.height = H*d;
+    ctx.setTransform(d,0,0,d,0,0);
+    k  = Math.min(W/(WB+520), H/1250);        // fit, with room for dimensions
+    ox = (W - WB*k)/2;
+    oy = H - Math.max(46, H*0.13);
+  }
+  const X = mm => ox + mm*k;
+  const Y = mm => oy - mm*k;
+
+  function wheel(cx, cy, r){
+    ctx.strokeStyle=C.dim; ctx.lineWidth=Math.max(1.6, r*0.13);
+    ctx.globalAlpha=.5; ctx.beginPath(); ctx.arc(cx,cy,r,0,7); ctx.stroke();
+    ctx.globalAlpha=.32; ctx.lineWidth=1;
+    for(let i=0;i<6;i++){ const a=i*Math.PI/3;
+      ctx.beginPath(); ctx.moveTo(cx,cy);
+      ctx.lineTo(cx+Math.cos(a)*r*0.86, cy+Math.sin(a)*r*0.86); ctx.stroke(); }
+    ctx.globalAlpha=.6; ctx.beginPath(); ctx.arc(cx,cy,r*0.1,0,7);
+    ctx.fillStyle=C.dim; ctx.fill(); ctx.globalAlpha=1;
+  }
+  function dot(p, col){
+    ctx.beginPath(); ctx.arc(X(p.x),Y(p.y),3.4,0,7);
+    ctx.fillStyle=col; ctx.globalAlpha=.9; ctx.fill(); ctx.globalAlpha=1;
+  }
+  function seg(a,b,col,w,alpha){
+    ctx.strokeStyle=col; ctx.lineWidth=w; ctx.globalAlpha=alpha;
+    ctx.beginPath(); ctx.moveTo(X(a.x),Y(a.y)); ctx.lineTo(X(b.x),Y(b.y));
+    ctx.stroke(); ctx.globalAlpha=1;
+  }
+  /* coil-over drawn as a real coil between two points */
+  function shock(a,b){
+    const dx=b.x-a.x, dy=b.y-a.y, len=Math.hypot(dx,dy);
+    const ux=dx/len, uy=dy/len, px=-uy, py=ux, coils=9, amp=26;
+    ctx.strokeStyle=C.gold; ctx.lineWidth=1.6; ctx.globalAlpha=.75;
+    ctx.beginPath();
+    for(let i=0;i<=coils*8;i++){
+      const f=i/(coils*8), s=Math.sin(f*coils*Math.PI*2)*amp*(f>0.12&&f<0.88?1:0);
+      const mx=a.x+dx*f+px*s, my=a.y+dy*f+py*s;
+      i?ctx.lineTo(X(mx),Y(my)):ctx.moveTo(X(mx),Y(my));
+    }
+    ctx.stroke(); ctx.globalAlpha=1;
+  }
+  function dim(a,b,label,col){
+    ctx.strokeStyle=col; ctx.globalAlpha=.55; ctx.lineWidth=1;
+    ctx.setLineDash([]); ctx.beginPath();
+    ctx.moveTo(X(a.x),Y(a.y)); ctx.lineTo(X(b.x),Y(b.y)); ctx.stroke();
+    const tick=(p,n)=>{ ctx.beginPath();
+      ctx.moveTo(X(p.x)-n*4,Y(p.y)-4); ctx.lineTo(X(p.x)+n*4,Y(p.y)+4); ctx.stroke(); };
+    tick(a,1); tick(b,1);
+    ctx.globalAlpha=.8; ctx.fillStyle=col;
+    ctx.font="500 10px ui-monospace,SFMono-Regular,Menlo,monospace";
+    ctx.fillText(label, (X(a.x)+X(b.x))/2 - ctx.measureText(label).width/2,
+                        (Y(a.y)+Y(b.y))/2 - 6);
+    ctx.globalAlpha=1;
+  }
+
+  let t0 = performance.now();
+  function frame(now){
+    const el = (now - t0)/1000;
+    /* slow, eased sweep through the travel range */
+    const t = TRAVEL * (0.5 - 0.5*Math.cos(el*0.55));
+    const s = solve(t);
+    const comp = S0.shock - s.shock;
+    const mr = ratioAt(t);
+
+    ctx.clearRect(0,0,W,H);
+
+    /* ground plane + hatching */
+    ctx.strokeStyle=C.line; ctx.lineWidth=1; ctx.globalAlpha=.9;
+    ctx.beginPath(); ctx.moveTo(X(-190),Y(0)); ctx.lineTo(X(WB+190),Y(0)); ctx.stroke();
+    ctx.globalAlpha=.45;
+    for(let x=-180;x<WB+190;x+=26){ ctx.beginPath();
+      ctx.moveTo(X(x),Y(0)); ctx.lineTo(X(x)-7,Y(0)+8); ctx.stroke(); }
+    ctx.globalAlpha=1;
+
+    wheel(X(AF.x), Y(AF.y), R*k);
+    wheel(X(s.A.x), Y(s.A.y), R*k);
+
+    /* powertrain mass block, as in the workbench packaging view */
+    ctx.strokeStyle=C.line; ctx.fillStyle="rgba(168,145,122,.07)";
+    ctx.lineWidth=1; ctx.globalAlpha=.9;
+    ctx.beginPath(); ctx.rect(X(520),Y(600),(330)*k,(300)*k);
+    ctx.fill(); ctx.stroke(); ctx.globalAlpha=1;
+
+    /* fork, frame spine, swingarm */
+    seg(FC, AF, C.sage, 3, .5);
+    ctx.strokeStyle=C.dim; ctx.lineWidth=2; ctx.globalAlpha=.42;
+    ctx.beginPath();
+    ctx.moveTo(X(FC.x),Y(FC.y));
+    ctx.bezierCurveTo(X(430),Y(880), X(660),Y(760), X(SU.x),Y(SU.y));   // top spine
+    ctx.bezierCurveTo(X(960),Y(545), X(915),Y(415), X(P.x),Y(P.y));     // down to pivot
+    ctx.moveTo(X(FC.x),Y(FC.y));
+    ctx.bezierCurveTo(X(400),Y(560), X(560),Y(380), X(P.x),Y(P.y));     // downtube
+    ctx.stroke(); ctx.globalAlpha=1;
+    seg(P, s.A, C.muted, 3.4, .62);
+
+    shock(s.Lp, SU);
+    seg(P, s.Lp, C.amber, 2, .55);
+    dot(P, C.amber); dot(SU, C.amber); dot(s.Lp, C.amber);
+    dot(AF, C.dim);  dot(s.A, C.dim);
+
+    /* dimensions */
+    dim({x:0,y:-135}, {x:WB,y:-135}, "WB 1390 mm", C.sage);
+    dim({x:WB+215,y:R}, {x:WB+215,y:R+TRAVEL}, "travel "+TRAVEL+" mm", C.sage);
+
+    /* readout */
+    const rows = [["motion ratio", mr.toFixed(3)],
+                  ["leverage",     (1/Math.max(mr,1e-4)).toFixed(2)],
+                  ["shock comp",   comp.toFixed(0)+" mm"],
+                  ["wheel travel", t.toFixed(0)+" mm"]];
+    ctx.font="500 10px ui-monospace,SFMono-Regular,Menlo,monospace";
+    rows.forEach((r,i)=>{
+      const y = 22 + i*15;
+      ctx.globalAlpha=.5; ctx.fillStyle=C.muted; ctx.fillText(r[0], 16, y);
+      ctx.globalAlpha=.85; ctx.fillStyle=C.sage;  ctx.fillText(r[1], 108, y);
+    });
+    ctx.globalAlpha=1;
+    requestAnimationFrame(frame);
+  }
+
+  addEventListener("resize", resize);
+  resize();
+  requestAnimationFrame(frame);
 })();
 </script>
 </body>
